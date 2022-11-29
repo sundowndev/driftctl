@@ -251,6 +251,8 @@ var supportedTypes = map[string]ResourceTypeMeta{
 	"azurerm_private_dns_txt_record":   {},
 	"azurerm_image":                    {},
 	"azurerm_ssh_public_key":           {},
+
+	"cloudflare_zone": {},
 }
 
 func IsResourceTypeSupported(ty string) bool {

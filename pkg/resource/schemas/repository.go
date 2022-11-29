@@ -9,8 +9,10 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/snyk/driftctl/enumeration/resource"
+	tf "github.com/snyk/driftctl/enumeration/terraform"
 	"github.com/snyk/driftctl/pkg/resource/aws"
 	"github.com/snyk/driftctl/pkg/resource/azurerm"
+	"github.com/snyk/driftctl/pkg/resource/cloudflare"
 	"github.com/snyk/driftctl/pkg/resource/github"
 	"github.com/snyk/driftctl/pkg/resource/google"
 )
@@ -58,6 +60,8 @@ func (r *SchemaRepository) Init(providerName, providerVersion string, schema map
 			providerVersion = "3.78.0"
 		case "azurerm":
 			providerVersion = "2.71.0"
+		case tf.CLOUDFLARE:
+			providerVersion = "3.28.0"
 		default:
 			return errors.Errorf("unsupported remote '%s'", providerName)
 		}
@@ -92,6 +96,8 @@ func (r *SchemaRepository) Init(providerName, providerVersion string, schema map
 		google.InitResourcesMetadata(r)
 	case "azurerm":
 		azurerm.InitResourcesMetadata(r)
+	case tf.CLOUDFLARE:
+		cloudflare.InitResourcesMetadata(r)
 	default:
 		return errors.Errorf("unsupported remote '%s'", providerName)
 	}
